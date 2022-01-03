@@ -56,7 +56,7 @@ def error_response(item):
     return normal_dict(error)
 
 
-while False:
+while True:
     for i in miner_list:
         URL = "http://" + f"{i.get('url')}/stat"
         try:
