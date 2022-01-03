@@ -26,7 +26,7 @@ with open("miner_list.cfg") as rigs:
             rig_dict[key] = value
         miner_list.append(rig_dict)
 
-print(argv_dict, miner_list)
+# print(argv_dict, miner_list)
 
 if argv_dict.get('server'):
     server = f"http://{argv_dict.get(f'server')}/api/stats/"
