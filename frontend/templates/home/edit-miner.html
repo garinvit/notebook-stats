@@ -1,0 +1,75 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Edit miner {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="title">Edit miner</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+          <div class="row">
+            <div class="col-md-5 pr-md-1">
+              <div class="form-group">
+                  <label for="id_title">Название рига:</label> <input class="form-control" type="text" name="title" maxlength="100" required id="id_title">
+              </div>
+            </div>
+              <div class="col-md-5 pr-md-1">
+                  <div class="form-group">
+                      <label>Username</label>
+                      <input type="text" class="form-control" disabled="" value="{{ request.user.username}}">
+                  </div>
+              </div>
+              <div class="col-md-12">
+              <div class="form-group">
+                  <label for="id_description">Описание рига:</label> <input class="form-control" type="text" name="description" maxlength="255" id="id_description">
+              </div>
+            </div>
+              <div class="col-md-5 pr-md-1">
+              <div class="form-group">
+                  <label for="id_color">Цвет:</label> <input class="form-control"  type="text" name="color" maxlength="6" id="id_color">
+              </div>
+            </div>
+              <div class="col-md-5 pr-md-1">
+              <div class="form-group">
+                  <label for="id_server">Сервер Пула:</label> <input class="form-control" type="text" name="server" maxlength="255" id="id_server"></p>
+              </div>
+            </div>
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="id_miner_worker">Воркер:</label> <input class="form-control" type="text" name="miner_worker" maxlength="255" id="id_miner_worker">
+                  </div>
+              </div>
+{#              <div class="row">#}
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="id_bat">Батник:</label> <textarea class="form-control" name="bat" maxlength="1000" id="id_bat"></textarea>
+                      </div>
+                    </div>
+              </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-fill btn-primary">Save</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

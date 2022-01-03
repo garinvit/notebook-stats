@@ -1,0 +1,177 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+{#{{ labels|json_script:'dataLabels' }}#}
+{#{{ values|json_script:'dataValues' }}#}
+{#<input name="searchTxt" id="searchTxt" value="{{ json1 }}"/>#}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+
+      <div class="col-12">
+        <div class="card card-chart">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col-sm-6">
+            </div>
+          </div>
+          <div class="card-body">
+              <canvas id="myChart" height="100"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+      </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{#  <script>#}
+{#      const ctx = document.getElementById('myChart');#}
+{#      const myChart = new Chart(ctx, {#}
+{#          type: 'bar',#}
+{#          data: {#}
+{#              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],#}
+{#              datasets: [{#}
+{#                  label: '# of Votes',#}
+{#                  data: [12, 19, 3, 5, 2, 3],#}
+{#                  backgroundColor: [#}
+{#                      'rgba(255, 99, 132, 0.2)',#}
+{#                      'rgba(54, 162, 235, 0.2)',#}
+{#                      'rgba(255, 206, 86, 0.2)',#}
+{#                      'rgba(75, 192, 192, 0.2)',#}
+{#                      'rgba(153, 102, 255, 0.2)',#}
+{#                      'rgba(255, 159, 64, 0.2)'#}
+{#                  ],#}
+{#                  borderColor: [#}
+{#                      'rgba(255, 99, 132, 1)',#}
+{#                      'rgba(54, 162, 235, 1)',#}
+{#                      'rgba(255, 206, 86, 1)',#}
+{#                      'rgba(75, 192, 192, 1)',#}
+{#                      'rgba(153, 102, 255, 1)',#}
+{#                      'rgba(255, 159, 64, 1)'#}
+{#                  ],#}
+{#                  borderWidth: 1#}
+{#              }]#}
+{#          },#}
+{#          options: {#}
+{#              scales: {#}
+{#                  y: {#}
+{#                      beginAtZero: true#}
+{#                  }#}
+{#              }#}
+{#          }#}
+{#      });#}
+{#  </script>#}
+{#    <script>#}
+{#        const labels = [#}
+{#            'January',#}
+{#            'February',#}
+{#            'March',#}
+{#            'April',#}
+{#            'May',#}
+{#            'June',#}
+{#        ];#}
+{##}
+{#        const data = {#}
+{#            labels: labels,#}
+{#            datasets: [{#}
+{#                label: 'My First dataset',#}
+{#                backgroundColor: 'rgb(255, 99, 132)',#}
+{#                borderColor: 'rgb(255, 99, 132)',#}
+{#                data: [0, 10, 5, 2, 20, 30, 45],#}
+{#            }]#}
+{#        };#}
+{##}
+{#        const config = {#}
+{#            type: 'line',#}
+{#            data: data,#}
+{#            options: {}#}
+{#        };#}
+{#        const myChart = new Chart(#}
+{#            document.getElementById('myChart'),#}
+{#            config#}
+{#        );#}
+{#    </script>#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const DATA_COUNT = 7;
+        const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+        const labels = {{ labels|safe }};
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'temperature',
+                    data: {{ values|safe }},
+                    borderColor: 'rgb(69,255,1)',
+                    backgroundColor: 'rgb(108,255,58)',
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'pool speed',
+                    data: {{ values2|safe }},
+                    borderColor: 'rgb(255,152,0)',
+                    backgroundColor: 'rgb(255,187,56)',
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'miner speed',
+                    data: {{ values3|safe }},
+                    borderColor: 'rgb(0,36,118)',
+                    backgroundColor: 'rgb(0,81,255)',
+                    yAxisID: 'y',
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Miner'
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: false,
+                        position: 'right',
+
+                        // grid line settings
+                        grid: {
+                            drawOnChartArea: true, // only want the grid lines for one axis to show up
+                        },
+                    },
+                }
+            },
+        };
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+{% endblock javascripts %}

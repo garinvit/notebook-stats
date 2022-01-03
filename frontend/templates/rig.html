@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+{#    <link rel="stylesheet" type="text/css" href="style.css" />#}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+    {{ data|json_script:'name' }}
+</head>
+{#<input name="searchTxt" id="searchTxt" value="{{ json1 }}"/>#}
+
+<body>
+<div id="container">
+    <div id="error"></div>
+    <table id="miner_stat">
+        <tr>
+            <td class="column_title" colspan="2" id="miner_name">Miner</td>
+        </tr>
+        <tr>
+            <td class="column_title">Status</td>
+            <td id="status"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Algorithm</td>
+            <td id="algorithm"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Pool Hashrate</td>
+            <td id="pool_hashrate"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Shares/Minute</td>
+            <td id="shares_per_minute"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Uptime</td>
+            <td id="uptime"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Electricity</td>
+            <td id="electricity"></td>
+        </tr>
+        <tr>
+            <td class="column_title">Server</td>
+            <td id="server"></td>
+        </tr>
+        <tr>
+            <td class="column_title">User</td>
+            <td id="user"></td>
+        </tr>
+    </table>
+    <table id="device_stat" class="device_stat_default">
+        <tr>
+            <td class="column_title" colspan="10">GPUs</td>
+        </tr>
+        <tr>
+            <td class="column_title">ID</td>
+            <td class="column_title">GPU</td>
+            <td class="column_title">Fan</td>
+            <td class="column_title">Temperature</td>
+            <td class="column_title">Speed</td>
+            <td class="column_title">Shares</td>
+            <td class="column_title">Core</td>
+            <td class="column_title">Memory</td>
+            <td class="column_title">Power</td>
+            <td class="column_title">Efficiency</td>
+        </tr>
+        <tr id="total">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="{% static 'js/script.js'%}"></script>
+
+</html>
