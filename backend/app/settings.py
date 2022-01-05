@@ -5,9 +5,7 @@ INSTALLED_APPS += [
     "home",
     'rest_framework_social_oauth2',
     'garpix_auth',
-    'django_filters',
     'api',
-    'mathfilters',
 ]
 MIDDLEWARE += [
     'corsheaders.middleware.CorsMiddleware',
@@ -15,12 +13,14 @@ MIDDLEWARE += [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': 'db.sqlite3',
-#     }
-# }
+sql_lite = 1
+if sql_lite:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
 log = 0
 if log:
     LOGGING = {

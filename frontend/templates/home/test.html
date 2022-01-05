@@ -1,0 +1,158 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %}
+{#{{ labels|json_script:'dataLabels' }}#}
+{#{{ values|json_script:'dataValues' }}#}
+{#<input name="searchTxt" id="searchTxt" value="{{ json1 }}"/>#}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+
+      <div class="col-md-10">
+        <div class="card card-chart">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col-sm-6">
+            </div>
+          </div>
+          <div class="card-body">
+              <canvas id="tempAll" height="75"></canvas>
+          </div>
+        </div>
+      </div>
+          {% for i in range %}
+          <div class="card card-chart">
+              <div class="card-header ">
+                  <div class="row">
+                      <div class="col-sm-6">
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <canvas id="miner{{ i }}" height="100"></canvas>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+    </div>
+
+      </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const miners = {{ miners|safe }};
+        const labels = {{ labels|safe }};
+        const data = {
+            labels: labels,
+            datasets: [
+                {% for i in range %}
+                {
+                    label: 'temp_'+ miners[{{ i }}].title,
+                    data: miners[{{ i }}].temperature,
+                    borderColor: miners[{{ i }}].border,
+                    backgroundColor: miners[{{ i }}].background,
+                    yAxisID: 'y',
+                },
+                {% endfor %}
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Температура'
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                    }
+                    },
+                }
+            };
+        const myChart = new Chart(
+            document.getElementById('tempAll'),
+            config
+        );
+        {% for i in range %}
+            const data{{ i }} = {
+                labels: labels,
+                datasets: [
+                        {
+                            label: 'Температура',
+                            data: miners[{{ i }}].temperature,
+                            borderColor: 'rgb(69,255,1)',
+                            backgroundColor: 'rgb(108,255,58)',
+                            yAxisID: 'y',
+                        },
+                        {
+                            label:  'Хэшрейт на пуле',
+                            data: miners[{{ i }}].pool_speed,
+                            borderColor: 'rgb(255,152,0)',
+                            backgroundColor: 'rgb(255,187,56)',
+                            yAxisID: 'y',
+                        },
+                        {
+                            label: 'Хэшрейт в майнере',
+                            data: miners[{{ i }}].speed,
+                            borderColor: 'rgb(0,36,118)',
+                            backgroundColor: 'rgb(0,81,255)',
+                            yAxisID: 'y',
+                        },
+
+                ]
+            };
+
+            const config{{ i }} = {
+                type: 'line',
+                data: data{{ i }},
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    stacked: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Stats_' + miners[{{ i }}].title
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                        }
+                    },
+                }
+            };
+            const myChart{{ i }} = new Chart(
+            document.getElementById('miner{{ i }}'),
+            config{{ i }}
+        );
+        {% endfor %}
+    </script>
+{% endblock javascripts %}

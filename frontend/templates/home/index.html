@@ -24,6 +24,18 @@
           </div>
         </div>
       </div>
+
+          <div class="card card-chart">
+              <div class="card-header ">
+                  <div class="row">
+                      <div class="col-sm-6">
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <canvas id="sumHash" height="75"></canvas>
+                  </div>
+              </div>
+          </div>
           {% for i in range %}
           <div class="card card-chart">
               <div class="card-header ">
@@ -94,6 +106,56 @@
         const myChart = new Chart(
             document.getElementById('tempAll'),
             config
+        );
+
+        const dataSum = {
+            labels: {{ sumLabels|safe }},
+            datasets: [
+                    {
+                        label: 'Sum miner speed',
+                        data: {{ sumHash|safe }},
+                        borderColor: 'rgb(69,255,1)',
+                        backgroundColor: 'rgb(108,255,58)',
+                        yAxisID: 'y',
+                    },
+                {
+                    label: 'Sum pool speed',
+                    data: {{ sumPool|safe }},
+                    borderColor: 'rgb(255,152,0)',
+                    backgroundColor: 'rgb(255,187,56)',
+                    yAxisID: 'y',
+                }
+            ]
+        };
+
+        const configSum = {
+            type: 'line',
+            data: dataSum,
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Общая скорость всех майнеров'
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                    }
+                },
+            }
+        };
+        const myChartSum = new Chart(
+            document.getElementById('sumHash'),
+            configSum
         );
         {% for i in range %}
             const data{{ i }} = {
